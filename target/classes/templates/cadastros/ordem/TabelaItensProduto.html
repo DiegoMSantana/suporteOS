@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+
+<body>
+
+	<div class="js-tabela-produto-container">
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Produto</th>
+					<th scope="col">Quantidade</th>
+					<th scope="col">Valor</th>
+					<th scope="col">Subtotal</th>
+					<th scope="col" th:if="${valorTotalItensProduto > 0}"></th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr th:each="itemProduto : ${itensProduto}">
+					<th style="vertical-align: middle" th:text="${itemProduto.produto.nomeProduto}">1</th>
+					<td style="width: 85px"><input type="text"
+						class="form-control js-tabela-produto-quantidade-item"
+						style="width: 70px" th:value="${itemProduto.quantidade}"
+						data:codigo-produto="${itemProduto.produto.id}" /></td>
+					<!--<td th:text="${itemProduto.quantidade}"></td>-->
+					<td style="vertical-align: middle">R$ [[${{itemProduto.valorUnitario}}]]</td>
+					<td style="vertical-align: middle">R$ [[${{itemProduto.valorTotalItemProduto}}]]</td>
+					<td><button type="button"
+							class="btn btn-block btn-danger js-remover-servico-btn">Remover</button></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<span class="js-valor-produto"
+			data:valor-total-itens-produto="${valorTotalItensProduto}"></span>
+
+		<div class="bw-tabela-cervejas__vazio" th:if="${itensProduto.empty}">
+			<i class="glyphicon  glyphicon-list-alt"></i>&nbsp;&nbsp; <span>Você
+				ainda não adicionou nenhum produto.</span>
+		</div>
+
+	</div>
+</body>
+</html>

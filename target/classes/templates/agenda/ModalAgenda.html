@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+
+
+<div class="modal fade" id="modal-agenda">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Agendamento de Eventos</h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="post">
+
+					<div class="box-body">
+
+						<form name="form_evento" method="POST">
+
+							<!-- Evento -->
+							<div class="form-group col-xs-12 col-sm-12">
+								<label for="eventoDescricao" class="control-label">Descrição
+									do Evento*</label> <input style="width: 820px;" type="text"
+									class="form-control js-evento" id="evento"
+									autofocus="autofocus" />
+							</div>
+
+
+							<!-- Razão Social
+							<div class="form-group col-xs-3 col-sm-4">
+								<label for="dataHoraInicio">Hora de Início*</label> <input type="dateTime"
+									class="form-control js-data-hora-inicio" id="dataHoraInicio" name="dataHoraInicio" />
+							</div>-->
+							
+							<div class="form-group col-sm-4">
+								<label for="dataHoraInicio">Hora de Início*</label>
+				                <div class='input-group date' id='datetimepicker1'>			                
+				                    <input type='text' class="form-control" id="dataHoraInicio" name="dataHoraInicio"/>
+				                    <span class="input-group-addon">
+				                        <span class="glyphicon glyphicon-calendar"></span>
+				                    </span>
+				                </div>
+			            	</div>
+
+							<!-- Razão Social
+							<div class="form-group col-xs-3 col-sm-4">
+								<label for="dataHoraFim">Hora de Término*</label> <input type="dateTime"
+									class="form-control js-data-hora-fim" id="dataHoraFim" name="dataHoraFim" />
+							</div>-->
+							
+							<div class="form-group col-sm-4">
+								<label for="dataHoraFim">Hora de Término*</label>
+				                <div class='input-group date' id='datetimepicker2'>			                
+				                    <input type='text' class="form-control" id="dataHoraFim" name="dataHoraFim"/>
+				                    <span class="input-group-addon">
+				                        <span class="glyphicon glyphicon-calendar"></span>
+				                    </span>
+				                </div>
+			            	</div>
+
+							<!-- Razão Social-->
+							<div class="form-group col-xs-3 col-sm-4">
+								<label for="valorUnitario">Cor*</label> <!--<input
+									type="text" class="form-control js-valor-unitario js-decimal"
+									id="precoUnitario" name="valorUnitario" />-->
+									<select name="color" class="form-control" id="color">
+											<option value="">Selecione</option>			
+											<option style="color:#FFD700;" value="#FFD700">Amarelo</option>
+											<option style="color:#0071c5;" value="#0071c5">Azul Turquesa</option>
+											<option style="color:#FF4500;" value="#FF4500">Laranja</option>
+											<option style="color:#8B4513;" value="#8B4513">Marrom</option>	
+											<option style="color:#1C1C1C;" value="#1C1C1C">Preto</option>
+											<option style="color:#436EEE;" value="#436EEE">Royal Blue</option>
+											<option style="color:#A020F0;" value="#A020F0">Roxo</option>
+											<option style="color:#40E0D0;" value="#40E0D0">Turquesa</option>										
+											<option style="color:#228B22;" value="#228B22">Verde</option>
+											<option style="color:#8B0000;" value="#8B0000">Vermelho</option>
+										</select>
+							</div>
+
+							<div class="form-group  col-sm-12">
+								<label for="observacoes">Detalhes</label>
+								<textarea class="form-control js-observacoes"
+									id="observacoes" rows="7"
+									placeholder="Descreva detalhes sobre o evento"></textarea>
+							</div>
+							
+
+							<div class="modal-footer">
+								<!--<button type="button" class="btn btn-default btn-lrg ajax" title="Ajax Request">
+			    				<i class="fa fa-spin fa-refresh"></i>&nbsp; Get External Content
+			  				</button>-->
+								<button type="button" class="btn btn-default js-btn-fechar"
+									data-dismiss="modal">Fechar</button>
+									
+								<button type="button" id="modal-inserir-produto-btn"
+									class="btn btn-primary modal-inserir-produto-btn">Inserir</button>
+							</div>
+
+						</form>
+						<!-- Final de formulário -->
+
+					</div>
+					<!-- box-body -->
+
+				</div>
+				<!-- Post -->
+
+			</div>
+
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+</html>

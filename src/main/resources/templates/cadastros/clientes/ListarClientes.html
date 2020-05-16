@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/layoutPadrao'">
+
+<head>
+
+<title>Listar de Clientes</title>
+	
+	<link rel="stylesheet" th:href="@{/layout/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}">
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        
+ <th:block layout:fragment="stylesheet-extra">
+
+  	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/sweetalert.css}">
+	
+</th:block>
+</head>
+
+
+<!--<section class="content" layout:fragment="conteudo">-->
+
+<!-- Main content -->
+<section layout:fragment="conteudo">
+
+		
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Tabela Pesquisa de Clientes</h3>
+            </div>
+            <!-- /.box-header -->
+                     
+				<div class="margin">	              	
+			         <div class="btn-group">
+			             <a th:href="@{/cadastros/cliente/novo}"><button type="button" class="btn btn-block btn-primary"><i class="fa fa-plus-circle"></i>&nbsp;Novo Cliente</button></a>
+			         </div>	              	
+			    </div>
+	              		                 
+            <div class="box-body">
+
+              <table id="example2" class="table table-bordered table-hover">
+              
+                <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>RG/Raz&atilde;o Social</th>
+                  <th>CPF/CNPJ</th>
+                  <th>Tipo</th>
+                  <th>A&ccedil;&otilde;es</th>
+                  <!--<th>CSS grade</th>-->
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                  <th>Nome</th>
+                  <th>RG/Raz&atilde;o Social</th>
+                  <th>CPF/CNPJ</th>
+                  <th>Tipo</th>
+                  <th>A&ccedil;&otilde;es</th>
+                  <!--<th>CSS grade</th>-->
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+        
+        
+        <div class="modal fade" id="modal-default">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Informações de Cliente</h4>
+              </div>
+              <div class="modal-body">
+              
+              <div class="post">
+
+				<div class="box-body">
+				
+				<form name="form_lista_clientes" method="POST" action="/suporte/cadastros/cliente/atualizar">
+				
+						<input type="hidden" id="idCliente" name="idCliente">
+                
+                		<!-- Situação -->
+                		<div class="form-group col-xs-6 col-sm-4">
+							<label for="InputClienteSituacao">Situa&ccedil;&atilde;o</label> 
+								<select class="form-control" id="situacao">
+										<option value="ATIVO">Ativo</option>
+										<option value="INATIVO">Inativo</option>
+								</select>
+						</div>
+						
+						<!-- Nome -->
+						<div class="form-group col-xs-8 col-sm-8 bw-required">
+								<label for="nomeFantasia" class="control-label">Nome Fantasia</label><input type="text" class="form-control js-nome-fantasia" id="nome" name="nome" />
+						</div>
+                
+                		<!-- Razão Social -->
+                		<div class="form-group col-xs-6 col-sm-4">
+							<label for="rgOuRazasocial">Razão Social*</label> <input type="text" class="form-control js-razao-social" id="razaoSocial" name="razaosocial" />
+						</div>
+						
+						<!-- Inscrição Estadual -->
+						<div class="form-group col-xs-6 col-sm-4">
+							<label for="inscEstadual">Inscrição Estadual</label>
+								<div class="input-group">
+									<span class="input-group-addon"> Isento <input type="checkbox" class="js-checkbox-isento" id="checkboxIsento" value="ISENTO" style="vertical-align: middle" />
+									</span> <input type="text" class="form-control js-input-inscEstadual"/>
+								</div>
+						</div>
+						
+						<!-- CNPJ -->
+						<div class="form-group col-xs-6 col-sm-4 bw-required">
+							<label for="cpfOuCnpj" class="control-label" >CNPJ</label>
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa fa-gg"></i></div>
+												<input type="text" id="cpfOuCnpj" class="form-control js-mask-cnpj" />
+								</div><!-- /.input group -->
+						</div>
+						
+						<!-- Email -->
+						<div class="form-group col-xs-6 col-sm-4">
+							<label for="exampleInputPassword1">Email</label>
+								<div class="box-body" style="padding: 0px;">
+									<div class="input-group">
+										<span class="input-group-addon">@</span> <input type="text" id="email" class="form-control" placeholder="Email" name="email">
+									</div>
+							   </div>
+						</div>
+						
+						<!-- phone mask -->
+						<div class="form-group col-xs-6 col-sm-4">
+							<label>Telefone Comercial</label>
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa fa-phone"></i></div>
+										<input type="text" id="telefone" class="form-control" data-inputmask='"mask": "(99)9999-9999"' data-mask />
+								</div>
+						</div>
+						
+						<!-- phone mask -->
+						<div class="form-group col-xs-6 col-sm-4">
+							<label>Celular</label>
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa  fa-mobile"></i></div>
+										<input type="text" id="celular" class="form-control" data-inputmask='"mask": "(99)[9]9999-9999"' data-mask />
+									</div>
+						</div>
+						
+						<!-- textarea -->
+						<div class="form-group col-md-12">
+							<label>Observações</label>
+								<textarea id="observacoes" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+						</div>
+						
+					</form><!-- Final de formulário -->
+						
+                </div><!-- box-body -->
+                
+              </div><!-- Post -->                
+                
+              </div>
+              <div class="modal-footer">
+              	<!--<button type="button" class="btn btn-default btn-lrg ajax" title="Ajax Request">
+    				<i class="fa fa-spin fa-refresh"></i>&nbsp; Get External Content
+  				</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary js-modal-atualizar-btn">Salvar Alterações</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        
+        <!--<div class="box-body" style="background-color: #fff">   
+			<div class="margin">	              	
+		         <div class="btn-group">
+		             <a th:href="@{/cliente/novo}"><button type="button" class="btn btn-block btn-primary"><i class="fa fa-plus-circle"></i>&nbsp;Novo Cliente</button></a>
+		         </div>	              	
+		    </div>
+	              	
+	    	</div>-->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+<!--</section>-->
+
+
+	<th:block layout:fragment="javascript-extra">	
+		
+		<script th:src="@{/layout/bower_components/datatables.net/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/layout/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+		
+		
+		<script>
+		
+			  $(function () {
+				  
+			    //$('#example1').DataTable()
+			    $('#example2').DataTable({
+			      'processing'  : true,
+			      'serverSide'	: true,
+			      'pageLength'  : 3,
+			      'paging'      : true,
+			      'lengthChange': false,
+			      //'search'      : { 'regex' : false }, 
+			      
+			      'searching'   : false,
+			      'ordering'    : false,
+			      'info'        : true,
+			      'autoWidth'   : false,
+			      'ajax'		: '/suporte/cadastros/cliente/pesquisar',
+			      'columns': [
+			            { 'data' : 'nome', 'name' : 'nome' },
+			            { 'data' : 'razaoSocial', 'name' : 'razaoSocial'},
+			            { 'data' : 'cpfoucnpj', 'name' : 'cpfoucnpj'},
+			            { 'data' : 'tipoPessoa', 'name' : 'tipoPessoa'},
+			            //{ "data": null }
+			            {
+			                 sortable: false,
+			                 "render": function ( data, type, full, meta ) {
+			                     var buttonID = full.id;
+			                     //return '<a id='+buttonID+' class="btn btn-success rolloverBtn" role="button" data-toggle="modal" data-target="#modal-default">Rollover</a>';
+			                     //return '<div class="btn-group"><button id='+buttonID+' type="button" class="btn btn-info btn-xs btn-primary dt-view btn-informacao" style="margin-right:16px;" data-toggle="modal" data-target="#modal-default"><span class="glyphicon glyphicon-eye-open glyphicon-info-sign" aria-hidden="true"> Info</span></button>  <button type="button" class="btn btn-primary btn-xs dt-edit" style="margin-right:16px;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</button><button type="button" class="btn btn-danger btn-xs dt-delete"><span class="glyphicon glyphicon-remove glyphicon-trash" aria-hidden="true"></span> Deletar</button></div>'
+			                 	 return '<a class="btn btn-primary btn-informacao" role="button " data-id='+full.id+' data-toggle="modal" data-target="#modal-default" style="margin-right:16px">Editar</a><a class="btn btn-danger js-exclusao-btn" role="button" style="margin-right:16px" data-codigo='+full.id+'>Deletar</a>'
+			                 }
+			             }
+			           
+			        
+		
+			        ],
+			        // Definições de colunas
+			       /* columnDefs: [
+			            {
+			                "searchable": false,
+			                "orderable": false,
+			                "targets": -1
+			            },
+			            
+			            {
+			                targets: -1, // -1 é a última coluna e 0 a primeira 
+			                data: null,
+			                defaultContent: '<div class="btn-group"><button type="button" class="btn btn-info btn-xs btn-primary dt-view btn-informacao" style="margin-right:16px;" data-toggle="modal" data-target="#modal-default"><span class="glyphicon glyphicon-eye-open glyphicon-info-sign" aria-hidden="true"> Info</span></button>  <button type="button" class="btn btn-primary btn-xs dt-edit" style="margin-right:16px;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</button><button type="button" class="btn btn-danger btn-xs dt-delete"><span class="glyphicon glyphicon-remove glyphicon-trash" aria-hidden="true"></span> Deletar</button></div>'
+			            },
+			            { orderable: false, searchable: false, targets: -1 } //Ultima columna sem ordenação para botões
+			        ], 
+			    });*/
+			    
+			    // Dispara eventos dentro do botão
+			    
+			    /*$('#example2').on('click', 'button.btn-informacao', function (e) {
+			        //console.log("button 2 is click");
+			        alert('teste');*/
+			    });
+			 });
+			  			  
+</script>
+
+		<script th:src="@{/layout/plugins/input-mask/jquery.inputmask.js}"></script>
+		<script th:src="@{/layout/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+		<script th:src="@{/layout/plugins/input-mask/jquery.inputmask.extensions.js}"></script>
+		<script th:src="@{/layout/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/layout/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+		<!-- Sweet Alert -->
+		<script th:src="@{/js/vendors/sweetalert-dev.js}"></script>
+
+		<script th:src="@{/js/datas.js}"></script>
+		<script th:src="@{/js/lista-clientes-datatable.js}"></script>
+		<script th:src="@{/js/dialogo-excluir-cliente.js}"></script>
+		<!--<script th:src="@{/js/vendors/jquery.mask.min.js}"></script>-->
+
+</th:block>
+
+</html>

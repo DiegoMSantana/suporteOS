@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:suporte="http://suporte.algaworks.com">
+<body>
+
+<aside class="main-sidebar" th:fragment="aside">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img th:src="@{/images/user2-160x160.jpg}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p th:text="${#authentication.principal.usuario.nome}">Alexander Pierce</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- search form -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Pesquisar...">
+          <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+      
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        	<li class="header">NAVEGAÇÃO PRINCIPAL</li>
+        
+			        <!-- CADASTROS -->
+			        <li class="treeview js-cadastros" suporte:menu="@{/cadastros.*}">
+			          <a href="#">
+			            <i class="fa fa-group"></i> <span>Cadastros</span>
+			            <span class="pull-right-container">
+			              <i class="fa fa-angle-left pull-right"></i>
+			            </span>
+			          </a>			      
+			          
+			          <ul class="treeview-menu" sec:authorize="hasRole('ROLE_CADASTRAR_USUARIO')">
+			            <li class="" suporte:menu="@{/cadastros/cliente.*}"><a th:href="@{/cadastros/cliente}"><i class="fa fa-circle-o"></i>Clientes</a></li>
+			          </ul>
+			          <ul class="treeview-menu" sec:authorize="hasRole('ROLE_CADASTRAR_USUARIO')">
+			            <li class="" suporte:menu="@{/cadastros/produto.*}"><a th:href="@{/cadastros/produto}"><i class="fa fa-circle-o"></i>Produtos</a></li>
+			          </ul>
+			        </li>
+			        <!-- ORDEM DE SERVIÇO -->
+			        <li class="treeview js-ordem" suporte:menu="@{/ordem}">
+			          <a href="#">
+			            <i class="fa fa-wrench"></i> <span>Ordem de Serviço</span>
+			            <span class="pull-right-container">
+			              <i class="fa fa-angle-left pull-right"></i>
+			            </span>
+			          </a>
+			          <ul class="treeview-menu" sec:authorize="hasRole('ROLE_CADASTRAR_USUARIO')">
+			            <li class="" suporte:menu="@{/ordem/pesquisar}"><a th:href="@{/ordem/pesquisar}"><i class="fa fa-circle-o"></i> Pesquisar</a></li>
+			            <li class="" suporte:menu="@{/ordem}"><a th:href="@{/ordem}"><i class="fa fa-circle-o"></i> Cadastrar</a></li>			            
+			          </ul>
+			        </li>
+			        
+			         <!-- AGENDA -->
+			        <li class="treeview js-agenda" suporte:menu="@{/agenda}">
+			          <a href="#">
+			            <i class="fa fa-wrench"></i> <span>Agenda</span>
+			            <span class="pull-right-container">
+			              <i class="fa fa-angle-left pull-right"></i>
+			            </span>
+			          </a>
+			          <ul class="treeview-menu" sec:authorize="hasRole('ROLE_CADASTRAR_USUARIO')">
+			            <li class="" suporte:menu="@{/agenda}"><a th:href="@{/agenda}"><i class="fa fa-circle-o"></i>Agendamento</a></li>
+			            			            
+			          </ul>
+			        </li>
+        
+     	 </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+ </body> 
+</html>

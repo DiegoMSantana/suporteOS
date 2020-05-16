@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+	
+
+<div class="modal fade" id="modal-produto">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Pesquisa de Produtos</h4>
+              </div>
+              <div class="modal-body">
+              
+              <div class="post">
+
+				<div class="box-body">
+				
+				<form name="form_lista_clientes" method="POST">
+				           		
+						<!-- Nome -->
+						<div class="form-group col-xs-12 col-sm-12">
+								<label for="produtoDescricao" class="control-label">Digite o nome do produto</label>
+										<input style="width: 820px;" type="text" class="form-control js-produto-nome-input"  id="produto"  autofocus="autofocus" data:url="@{/cadastros/produto}"/>
+						</div>
+						
+						<div id="produtoConfiguracoes" style="display:none">
+						
+								<!-- Razão Social-->
+		                		<div class="form-group col-xs-3 col-sm-4">
+									<label for="quantidade">Código Interno*</label>
+									 <input type="text" class="form-control js-codigo-interno" id="codigo-interno" name="codigo-interno" disabled="disabled" />
+								</div>
+                						
+								<!-- Razão Social-->
+		                		<div class="form-group col-xs-3 col-sm-4">
+									<label for="quantidade">Quantidade*</label>
+									 <input type="number" class="form-control js-quantidade-produto" id="quantidade-produto" name="quantidade-produto" required="required" title="Informe uma quantidade" />
+								</div>
+								
+								<!-- Razão Social-->
+		                		<div class="form-group col-xs-3 col-sm-4">
+									<label for="valorUnitario">Valor Unitário*</label>
+									<div class="input-group">
+													<div class="input-group-addon">R$</div>
+									 <input type="text" class="form-control js-valor-unitario js-decimal" id="precoUnitario" name="valorUnitario" disabled="disabled" />
+									 </div>
+								</div>
+													
+								<div class="form-group  col-sm-12">
+								<label for="detalhes">Detalhes</label>
+									<textarea class="form-control js-detalhes-produto" id="detalhesProduto" rows="7" 
+										placeholder="Descreva detalhes sobre o" disabled="disabled"></textarea>
+								</div>
+					
+					      </div><!-- Final produtoConfiguracoes -->
+					      
+					      <div class="modal-footer">
+			              	<!--<button type="button" class="btn btn-default btn-lrg ajax" title="Ajax Request">
+			    				<i class="fa fa-spin fa-refresh"></i>&nbsp; Get External Content
+			  				</button>-->
+			                <button type="button" class="btn btn-default js-btn-fechar" data-dismiss="modal">Fechar</button>
+			                <button type="button" id="modal-inserir-produto-btn" class="btn btn-primary js-modal-inserir-produto-btn">Inserir</button>
+			              </div>
+						
+					</form><!-- Final de formulário -->
+						
+                </div><!-- box-body -->
+                
+              </div><!-- Post -->                
+                
+              </div>
+              
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        
+ </html>

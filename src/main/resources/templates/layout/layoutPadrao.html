@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  
+  <!-- CSS LINKS -->
+  
+ 
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/bower_components/font-awesome/css/font-awesome.min.css}">
+  
+  <!-- Ionicons -->
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/bower_components/Ionicons/css/ionicons.min.css}">
+  
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        
+   <!-- PACE -->
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/plugins/pace/pace.min.css}">
+  
+  <!-- Suporte customized css -->
+  <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/suporte.css}">
+  
+
+	<th:block layout:fragment="stylesheet-extras"></th:block>
+	
+	<!-- Theme style -->
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/dist/css/AdminLTE.min.css}">
+  
+  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" type="text/css" th:href="@{/layout/dist/css/skins/_all-skins.min.css}">
+	
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+
+<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+<input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
+
+	<div class="wrapper">
+	
+			<header th:replace="layout/fragmentos/Header :: header"></header>
+			<div th:replace="layout/fragmentos/BarraLateral :: aside"></div>
+			
+			<div class="content-wrapper">
+			
+			<section class="content-header">
+			      <h1>Dashboard <small>Control panel</small></h1>
+			      <ol class="breadcrumb">
+			        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+			        <li><a href="#">Examples</a></li>
+			        <li class="active">Adicionar Cliente</li>
+			      </ol>
+    		</section>
+    		
+				<section class="content" layout:fragment="conteudo"></section>
+			
+			</div><!-- Content Wrapper -->
+			
+			<footer th:replace="layout/fragmentos/Footer :: footer"></footer>
+			<aside th:replace="layout/fragmentos/Setup_Aside :: aside_setup"></aside>
+			
+	  		<div class="control-sidebar-bg"></div>
+	
+	</div><!-- Wrapper -->
+	
+	<!-- jQuery 2.2.3 -->
+	<!--<script th:src="@{/layout/bower_components/jquery/dist/jquery.min.js}"></script>-->
+	<script th:src="@{/js/vendors/jquery.min.js}"></script>
+	
+	<!-- Bootstrap 3.3.6 -->
+	<script th:src="@{/layout/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+	
+	<!-- jQuery UI 1.11.4 -->
+	<script th:src="@{/layout/bower_components/jquery-ui/jquery-ui.min.js}"></script>
+	
+	<!-- PACE -->
+	<script th:src="@{/layout/bower_components/PACE/pace.min.js}"></script>
+	
+	<!-- AdminLTE App -->
+    <script th:src="@{/layout/dist/js/adminlte.min.js}"></script>
+	
+	<!-- AdminLTE for demo purposes -->
+	<script th:src="@{/layout/dist/js/demo.js}"></script>
+	
+	
+	<!--Non native template scripts -->
+	<script th:src="@{/js/vendors/jquery.maskMoney.min.js}"></script>
+	<script th:src="@{/js/vendors/jquery.mask.min.js}"></script>
+	<script th:src="@{/js/vendors/numeral.min.js}"></script>
+	<script th:src="@{/js/vendors/pt-br.min.js}"></script>
+	
+	<!-- Customized javascript by developer -->
+	<script th:src="@{/js/suporte.js}"></script>
+	
+	<th:block layout:fragment="javascript-extra">
+	
+		
+	
+	</th:block>
+	
+	
+</body>
+
+</html>

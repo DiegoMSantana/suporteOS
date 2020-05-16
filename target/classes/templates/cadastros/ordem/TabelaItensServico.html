@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+	
+<body>
+
+		<div class="js-tabela-servicos-container">
+	
+				<table class="table table-bordered">
+					<thead>
+						    <tr>
+						      <th scope="col">Serviço</th>
+						      <th scope="col">Detalhes</th>
+						      <th scope="col">Quantidade</th>
+						      <th scope="col">Valor Unitário</th>
+						      <th scope="col">Subtotal</th>
+						      <th scope="col" th:if="${valorTotalItensServico > 0}"></th>						 
+						    </tr>
+					</thead>
+					<tbody>
+						  				  
+						    <tr  th:each="item : ${itensServico}">	
+						      <th th:text="${item.descricao}">1</th>
+						      <td th:text="${item.detalhes}">Mark</td>
+						      <!--<td style="width: 85px"><input type="text" class="form-control" style="width: 70px" id="quantidade" name="quantidade" th:value="${item.quantidade}"/></td>-->
+						      <td th:text="${item.quantidade}"></td>
+						      <td>R$ [[${{item.valorUnitario}}]]</td>
+						      <td>R$ [[${{item.valorTotal}}]]</td>
+						      <td><button type="button" class="btn btn-block btn-danger js-remover-servico-btn" data:descricao-servico="${item.descricao}">Remover</button></td>						      			
+						    </tr>
+					</tbody>
+				</table>
+				
+				<span class="js-valor-servico" data:valor-total-itens-servico="${valorTotalItensServico}"></span>
+				
+				<div class="bw-tabela-cervejas__vazio"  th:if="${itensServico.empty}">
+						<i class="glyphicon  glyphicon-list-alt"></i>&nbsp;&nbsp; 
+						<span>Você ainda não adicionou nenhum servico.</span>
+				</div>
+				
+			</div>	    					  	
+	</body>									
+</html>
