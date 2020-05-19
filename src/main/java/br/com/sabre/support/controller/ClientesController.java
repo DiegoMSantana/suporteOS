@@ -37,6 +37,12 @@ public class ClientesController {
 	@Autowired
 	private Clientes clientes;
 
+	/**
+	 * @param cliente
+	 *            This parameter is to bind with view.
+	 * @return A view which will be shown on the web browser.
+	 */
+
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cliente cliente) {
 		ModelAndView mv = new ModelAndView("/cadastros/clientes/CadastroCliente");
@@ -54,6 +60,21 @@ public class ClientesController {
 		return mv;
 	}
 
+	/**
+	 * *
+	 * 
+	 * @param draw
+	 * @param start
+	 *            - Datatable from bootstrap start to count from 0 and increments
+	 *            according with length parameter.
+	 * @param length
+	 *            - Determine how much data will be shown in datatable.
+	 * @param search
+	 *            - This parameter must be activated on datatable parameter to work
+	 *            on.
+	 * @return json - List of clients to bootstrap datatable
+	 */
+
 	@RequestMapping(value = "/pesquisar")
 	@ResponseBody
 	public ResponseEntity<PageWrapper<Cliente>> pesquisar(@RequestParam(value = "draw") int draw,
@@ -61,7 +82,7 @@ public class ClientesController {
 			@RequestParam(value = "search[value]", required = false) String search) {
 
 		String busca = search;
-		int inicio = (start % length == 0) ? start / length : start / start;
+		int inicio = start / length;
 
 		Pageable pageable = new PageRequest(inicio, length);
 		PageWrapper<Cliente> list = new PageWrapper<>(clientes.filtrar(pageable, busca), draw);

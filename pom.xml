@@ -63,7 +63,8 @@
 		<!-- *************** SPRING FEATURES ********************************************************************** -->
 
 		<!-- Spring Data JPA -->
-		<spring-data-jpa.version>1.10.2.RELEASE</spring-data-jpa.version>
+		<!--<spring-data-jpa.version>1.10.2.RELEASE</spring-data-jpa.version>-->
+		<spring-data-jpa.version>1.11.23.RELEASE</spring-data-jpa.version>
 
 		<!-- Spring Security -->
 		<spring-security.version>4.1.1.RELEASE</spring-security.version>

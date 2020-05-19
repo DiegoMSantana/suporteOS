@@ -41,11 +41,6 @@ public class CadastroAgendaService {
 		agendamentos.saveAndFlush(agenda2);
 	}
 
-	private LocalDateTime converte(String valor) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		return LocalDateTime.parse(valor, formatter);
-	}
-
 	@Transactional
 	public void deletarEvento(Agenda agenda) {
 		try {
@@ -55,6 +50,11 @@ public class CadastroAgendaService {
 			throw new ImpossivelExcluirEntidadeException("\"Não foi possível deletar o evento\"");
 		}
 
+	}
+
+	private LocalDateTime converte(String valor) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		return LocalDateTime.parse(valor, formatter);
 	}
 
 }
