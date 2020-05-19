@@ -38,10 +38,6 @@ public class AgendaController {
 	@RequestMapping(value = "/buscar")
 	public @ResponseBody List<Agenda> buscarTodas() {
 
-		// ObjectMapper mapper = new ObjectMapper();
-		// mapper.registerModule(new JavaTimeModule());
-		// mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
 		return agendamentoRepository.findAll();
 	}
 
