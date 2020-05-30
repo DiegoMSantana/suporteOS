@@ -65,7 +65,7 @@ public class ClientesController {
 	 * 
 	 * @param draw
 	 * @param start
-	 *            - Datatable from bootstrap start to count from 0 and increments
+	 *            - Datatable from bootstrap starts counting from 0 and increments
 	 *            according with length parameter.
 	 * @param length
 	 *            - Determine how much data will be shown in datatable.

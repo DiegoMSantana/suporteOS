@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,15 @@ public class ClientesImpl implements ClientesQueries {
 		criteria.setFirstResult(primeiroRegistro);
 		criteria.setMaxResults(totalRegistrosPorPagina);
 
+		ProjectionList atributos = Projections.projectionList();
+
+		atributos.add(Projections.groupProperty("Id"));
+		atributos.add(Projections.groupProperty("nome"));
+		atributos.add(Projections.groupProperty("razaoSocial"));
+		atributos.add(Projections.groupProperty("cpfoucnpj"));
+		atributos.add(Projections.groupProperty("tipoPessoa"));
+
+		criteria.setProjection(atributos);
 		adicionarFiltro(criteria, busca);
 
 		return new PageImpl<>(criteria.list(), pageable, total(busca));
