@@ -85,6 +85,9 @@
 		<!-- thumbnailator - Gerar Thumbnail -->
 		<!-- https://github.com/coobird/thumbnailator -->
 		<thumbnailator.version>0.4.8</thumbnailator.version>
+		
+		<!-- JUnit -->
+		<junit.version>4.12</junit.version>
 
 
 
@@ -297,6 +300,14 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>${thumbnailator.version}</version>
 			<scope>compile</scope>
+		</dependency>
+		
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!--<dependency>
