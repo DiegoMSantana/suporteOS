@@ -81,6 +81,14 @@ public enum TipoPessoa {
 		return cpfOuCnpj.replaceAll("\\.|-|/", "");
 	}
 
+	public static String inserirFormatacaoCpf(String cpf) {
+		return cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})", "$1.$2.$3-");
+	}
+
+	public static String inserirFormatacaoCnpj(String cnpj) {
+		return cnpj.replaceAll("(\\d{2})(\\d{3})(\\d{3})(\\d{4})", "$1.$2.$3/$4-");
+	}
+
 	public abstract String formatar(String cpfOuCnpj);
 
 }

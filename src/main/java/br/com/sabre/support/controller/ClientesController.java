@@ -24,7 +24,9 @@ import br.com.sabre.support.controller.page.PageWrapper;
 import br.com.sabre.support.model.Cliente;
 import br.com.sabre.support.model.TipoPessoa;
 import br.com.sabre.support.repository.Clientes;
+import br.com.sabre.support.repository.Estados;
 import br.com.sabre.support.service.CadastroClienteService;
+import br.com.sabre.support.service.exception.CpfCnpjClienteJaCadastradoException;
 import br.com.sabre.support.service.exception.ImpossivelExcluirEntidadeException;
 
 @Controller
@@ -37,17 +39,15 @@ public class ClientesController {
 	@Autowired
 	private Clientes clientes;
 
-	/**
-	 * @param cliente
-	 *            This parameter is to bind with view.
-	 * @return A view which will be shown on the web browser.
-	 */
+	@Autowired
+	private Estados estados;
 
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cliente cliente) {
 		ModelAndView mv = new ModelAndView("/cadastros/clientes/CadastroCliente");
 		mv.addObject("contatos", cliente.getContato());
 		mv.addObject("tiposPessoa", TipoPessoa.values());
+		mv.addObject("estados", estados.findAll());
 
 		return mv;
 	}
@@ -59,21 +59,6 @@ public class ClientesController {
 
 		return mv;
 	}
-
-	/**
-	 * *
-	 * 
-	 * @param draw
-	 * @param start
-	 *            - Datatable from bootstrap starts counting from 0 and increments
-	 *            according with length parameter.
-	 * @param length
-	 *            - Determine how much data will be shown in datatable.
-	 * @param search
-	 *            - This parameter must be activated on datatable parameter to work
-	 *            on.
-	 * @return json - List of clients to bootstrap datatable
-	 */
 
 	@RequestMapping(value = "/pesquisar")
 	@ResponseBody
@@ -101,10 +86,15 @@ public class ClientesController {
 			cliente.setInsc_estadual("Isento");
 		}
 
-		cadastroClienteService.Salvar(cliente);
-		attr.addFlashAttribute("mensagem", "Cliente adicionado com sucesso!");
+		try {
+			cadastroClienteService.Salvar(cliente);
+		} catch (CpfCnpjClienteJaCadastradoException e) {
+			result.rejectValue("cpfOuCnpj", e.getMessage(), e.getMessage());
+			return novo(cliente);
+		}
 
-		return new ModelAndView("redirect:/cliente/novo");
+		attr.addFlashAttribute("mensagem", "Cliente adicionado com sucesso!");
+		return new ModelAndView("redirect:/cadastros/cliente/novo");
 	}
 
 	@GetMapping("/buscar/{identificador}")

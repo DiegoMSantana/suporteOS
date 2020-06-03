@@ -10,8 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -45,8 +47,9 @@ public class Cliente extends GenericDomain implements Serializable {
 	@CNPJ(groups = CnpjGroups.class)
 	@Column(name = "cpf_cnpj")
 	@NotBlank(message = "CPF/CNPJ é obrigatório")
-	private String cpfoucnpj;
+	private String cpfOuCnpj;
 
+	@NotBlank(message = "Digite o RG ou a razão social ")
 	@Column(name = "rg_razao_social")
 	private String razaoSocial;
 
@@ -68,6 +71,7 @@ public class Cliente extends GenericDomain implements Serializable {
 	private List<Contato> contato = new ArrayList<Contato>();
 
 	@Embedded
+	@Valid
 	private Endereco endereco;
 
 	// GETTERS AND SETTERS
@@ -97,12 +101,12 @@ public class Cliente extends GenericDomain implements Serializable {
 		this.tipoPessoa = tipoPessoa;
 	}
 
-	public String getCpfoucnpj() {
-		return cpfoucnpj;
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
 	}
 
-	public void setCpfoucnpj(String cpfoucnpj) {
-		this.cpfoucnpj = cpfoucnpj;
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public String getEmail() {
@@ -175,6 +179,24 @@ public class Cliente extends GenericDomain implements Serializable {
 
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
+	}
+
+	// extra methods
+
+	/*
+	 * @PrePersist
+	 * 
+	 * @PreUpdate private void prePersistPreUpdate() { this.cpfOuCnpj =
+	 * TipoPessoa.removerFormatacao(this.cpfOuCnpj); }
+	 */
+
+	@PostLoad
+	private void postLoad() {
+		this.cpfOuCnpj = this.tipoPessoa.formatar(this.cpfOuCnpj);
+	}
+
+	public String getCpfOuCnpjSemFormatacao() {
+		return TipoPessoa.removerFormatacao(this.cpfOuCnpj);
 	}
 
 }

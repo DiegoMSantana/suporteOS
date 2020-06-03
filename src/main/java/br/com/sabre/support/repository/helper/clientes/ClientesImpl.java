@@ -44,7 +44,7 @@ public class ClientesImpl implements ClientesQueries {
 		atributos.add(Projections.groupProperty("Id"));
 		atributos.add(Projections.groupProperty("nome"));
 		atributos.add(Projections.groupProperty("razaoSocial"));
-		atributos.add(Projections.groupProperty("cpfoucnpj"));
+		atributos.add(Projections.groupProperty("cpfOuCnpj"));
 		atributos.add(Projections.groupProperty("tipoPessoa"));
 
 		criteria.setProjection(atributos);

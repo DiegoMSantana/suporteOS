@@ -66,7 +66,7 @@ Support.Datatable = (function() {
 		
 		this.idCliente.val(resp.id);
 		this.nome.val(resp.nome);
-		this.cpfCnpj.val(resp.cpfoucnpj);
+		this.cpfCnpj.val(resp.cpfOuCnpj);
 		this.email.val(resp.email);
 		this.razaoSocial.val(resp.razaoSocial);
 		this.telefoneComercial.val(resp.telefone);
@@ -77,17 +77,18 @@ Support.Datatable = (function() {
 		var inscricaoEstadual = resp.insc_estadual;
 		if(inscricaoEstadual === "Isento"){
 			
-			this.checkboxIsento.prop('checked', 'checked');
-			this.checkboxIsento.attr("disabled", "disabled");
+			this.checkboxIsento.prop('checked', true);
+			this.checkboxIsento.attr("disabled", true);
 			this.inputInscricaoEstadual.val('');
-			this.inputInscricaoEstadual.attr("disabled", "disabled");
+			this.inputInscricaoEstadual.attr("disabled", true);
 			
 			this.cpfCnpj.attr("disabled", "disabled");
 		}else {
-			this.checkboxIsento.prop('checked', "checked");
-			this.inputInscricaoEstadual.attr("disabled", "disabled");
+			this.checkboxIsento.prop('checked', false);
+			this.checkboxIsento.attr("disabled", true);
+			this.inputInscricaoEstadual.attr("disabled", true);
 			this.inputInscricaoEstadual.val(inscricaoEstadual);
-			this.cpfCnpj.attr("disabled", "disabled");
+			this.cpfCnpj.attr("disabled", true);
 		}
 		
 		var comboSituacao = resp.situacao;

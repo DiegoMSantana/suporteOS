@@ -1,6 +1,7 @@
 package br.com.sabre.support.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.PersistenceException;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.sabre.support.model.Cliente;
 import br.com.sabre.support.repository.Clientes;
+import br.com.sabre.support.service.exception.CpfCnpjClienteJaCadastradoException;
 import br.com.sabre.support.service.exception.ImpossivelExcluirEntidadeException;
 
 @Service
@@ -20,6 +22,13 @@ public class CadastroClienteService {
 
 	@Transactional
 	public void Salvar(Cliente cliente) {
+
+		Optional<Cliente> clienteExistente = clientes.findByCpfOuCnpj(cliente.getCpfOuCnpj());
+
+		if (clienteExistente.isPresent()) {
+			throw new CpfCnpjClienteJaCadastradoException("CPF/CNPJ já cadastrado");
+		}
+
 		clientes.save(cliente);
 	}
 

@@ -2,18 +2,29 @@ $(function () {
     //Initialize Select2 Elements
     //$('.select2').select2()
 
-    //Telefone Comercial
+    
+    
+	//Telefone Comercial
     $('#telefone').inputmask(
     		'(99)9999-9999', {
     			//placeholder: '(99)9999-9999',
     			clearMaskOnLostFocus: true
     		});
+    
     //Telefone Celular
     $('#celular').inputmask(
     		'(99)[9]9999-9999', {
     			//placeholder: '(99)9999-9999',
     			clearMaskOnLostFocus: true
     		});
+    
+    //Cep
+    $('#enderecoCep').inputmask(
+    		'99.999-999', {
+    			//placeholder: '(99)9999-9999',
+    			clearMaskOnLostFocus: true
+    		});
+    
     
     //Formata CNPJ
    /* $('#cnpj').inputmask(
@@ -23,9 +34,13 @@ $(function () {
     
     		
     //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' });
-    $('.datemask2').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
+    //$('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' });
+    //$('.datemask2').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
     
+    
+    //Money Euro
+    //$('[data-mask]').inputmask();
+
     
     //Date picker
     $('#datepicker').datepicker({
@@ -39,10 +54,9 @@ $(function () {
     })
     
     
+    
+   
     /*
-    //Money Euro
-    $('[data-mask]').inputmask()
-
     //Date range picker
     $('#reservation').daterangepicker()
     

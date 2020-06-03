@@ -3,6 +3,11 @@ package br.com.sabre.support.model;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Embeddable
 public class Endereco implements Serializable {
@@ -10,12 +15,22 @@ public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String logradouro;
+
+	@NotBlank(message = "Digite um endereço e número")
 	private String descricao;
+
+	@NotBlank(message = "Digite um bairro")
 	private String bairro;
+
 	private String complemento;
 	private String cep;
-	private String estado;
-	private String cidade;
+
+	@Transient
+	private Estado estado;
+
+	@ManyToOne
+	@JoinColumn(name = "cidade")
+	private Cidade cidade;
 
 	public String getLogradouro() {
 		return logradouro;
@@ -57,19 +72,19 @@ public class Endereco implements Serializable {
 		this.cep = cep;
 	}
 
-	public String getEstado() {
+	public Estado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
 
-	public String getCidade() {
+	public Cidade getCidade() {
 		return cidade;
 	}
 
-	public void setCidade(String cidade) {
+	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
 

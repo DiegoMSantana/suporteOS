@@ -129,7 +129,7 @@
 						
 						<!-- CNPJ -->
 						<div class="form-group col-xs-6 col-sm-4 bw-required">
-							<label for="cpfOuCnpj" class="control-label" >CNPJ</label>
+							<label for="cpfOuCnpj" class="control-label" >CPF/CNPJ</label>
 								<div class="input-group">
 									<div class="input-group-addon"><i class="fa fa-gg"></i></div>
 												<input type="text" id="cpfOuCnpj" class="form-control js-mask-cnpj" />
@@ -215,24 +215,24 @@
 		
 		<script>
 		
-			  $(function () {
-				  
-				  $('#example2').DataTable( {
+			  $(function () {				  
+				  $('#example2').DataTable({
 				        "processing": true,
 				        "serverSide": true,
 				        'lengthChange': false,
 				        'ordering'    : false,
 				        'searching'   : false,
 				        'pageLength'  : 3,
+				        'autoWidth'   : false,
 				        'ajax'		: '/suporte/cadastros/cliente/pesquisar',			        
 				        "columnDefs": [
 				        	{
-				        		 "targets": [ 0 ],                 				              
-					             "orderable" : false,
-					             "searchable": false,
-					             "visible":    false
+				        		"targets": [ 0 ],                 				              
+					            "orderable" : false,
+					            "searchable": false,
+					            "visible":    false
 				        	},
-				          				           
+				        	
 				            {
 				                "targets": [ -1 ],                 				              
 				                "orderable" : false,
@@ -249,21 +249,20 @@
 				        ],
 				        
 				        "language": {
-				            "lengthMenu": "_MENU_ resultados por página",
-				            "zeroRecords": "Nenhum registro encontrado",
-				            "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-				            "infoEmpty": "Mostrando 0 até 0 de 0 registros",
-				            "infoFiltered": "(Filtrados de _MAX_ registros)",
+				            "lengthMenu"	: "_MENU_ resultados por página",
+				            "zeroRecords"	: "Nenhum registro encontrado",
+				            "info"			: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+				            "infoEmpty"		: "Mostrando 0 até 0 de 0 registros",
+				            "infoFiltered"	: "(Filtrados de _MAX_ registros)",
 				            "paginate": {
-				                "next": "Próximo",
-				                "previous": "Anterior",
-				                "first": "Primeiro",
-				                "last": "Último"
+				                "next"		: "Próximo",
+				                "previous"	: "Anterior",
+				                "first"		: "Primeiro",
+				                "last"		: "Último"
 				            },
 				        }
 				    });
-			 });
-			  			  
+			 });		  			  
 </script>
 
 		<script th:src="@{/layout/plugins/input-mask/jquery.inputmask.js}"></script>

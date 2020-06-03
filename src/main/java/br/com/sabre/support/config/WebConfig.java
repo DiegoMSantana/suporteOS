@@ -33,7 +33,9 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 
 import br.com.sabre.support.controller.DashboardController;
+import br.com.sabre.support.controller.converter.CidadeConverter;
 import br.com.sabre.support.controller.converter.ClienteConverter;
+import br.com.sabre.support.controller.converter.EstadoConverter;
 import br.com.sabre.support.controller.converter.GrupoConverter;
 import br.com.sabre.support.controller.converter.ServicoConverter;
 import br.com.sabre.support.session.TabelaItensServico;
@@ -116,8 +118,8 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		conversionService.addConverter(new ClienteConverter());
 		conversionService.addConverter(new ServicoConverter());
 		// conversionService.addConverter(new EstiloConverter());
-		// conversionService.addConverter(new CidadeConverter());
-		// conversionService.addConverter(new EstadoConverter());
+		conversionService.addConverter(new CidadeConverter());
+		conversionService.addConverter(new EstadoConverter());
 		conversionService.addConverter(new GrupoConverter());
 
 		// formatador de moeda
