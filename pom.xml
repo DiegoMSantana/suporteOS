@@ -81,7 +81,7 @@
 		<jcl-over-slf4j.version>1.7.21</jcl-over-slf4j.version>
 
 		<!-- Apache Bean Utils -->
-		<commons-beanutils.version>1.9.2</commons-beanutils.version>
+		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 
 		<!-- thumbnailator - Gerar Thumbnail -->
 		<!-- https://github.com/coobird/thumbnailator -->
