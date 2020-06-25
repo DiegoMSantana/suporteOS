@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/layoutPadrao'">
+
+<head>
+
+<title>Cadastro de Cliente</title>
+
+<!-- daterange picker -->
+<link rel="stylesheet"
+	th:href="@{/layout/bower_components/bootstrap-daterangepicker/daterangepicker.css}">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet"
+	th:href="@{/layout/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}">
+
+
+</head>
+
+<body>
+
+	<!-- Main content -->
+
+	<section class="content" layout:fragment="conteudo">
+
+		<div class="row">
+			<!-- /.col -->
+			<div class="col-md-12">
+
+
+				<div class="alert alert-danger alert-dismissible"
+					th:if="${#fields.hasErrors('${cliente.*}')}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">x</button>
+					<h4>
+						<i class="icon fa fa-exclamation-circle"></i>Alerta!
+					</h4>
+					<th:block
+						th:each="detailedError : ${#fields.detailedErrors('${cliente.*}')}">
+						<div>[[${detailedError.message}]].</div>
+					</th:block>
+				</div>
+
+				<!-- Alerta de sucesso -->
+				<div class="alert alert-success alert-dismissible"
+					th:if="${not #strings.isEmpty(mensagem)}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-hidden="true">x</button>
+					<h4>Sucesso</h4>
+					<span th:text="${mensagem}"></span>
+				</div>
+
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#activity" data-toggle="tab">Dados
+								Gerais</a></li>
+						<!--<li><a href="#timeline" data-toggle="tab">Contatos</a></li>-->
+						<li><a href="#settings" data-toggle="tab">Endereço</a></li>
+					</ul>
+
+
+
+					<form th:method="POST" th:object="${cliente}"
+						th:action="@{/cadastros/cliente/novo}">
+
+						<div class="tab-content">
+
+							<div class="active tab-pane" id="activity">
+								<!-- Post -->
+								<div class="post">
+
+									<div class="box-body">
+
+
+										<div class="form-group col-xs-6 col-sm-3 bw-required">
+											<label for="InputClienteSituacao" class="control-label">Tipo
+												Pessoa</label><br>
+
+											<th:block th:each="tipoPessoa : ${tiposPessoa}">
+
+												<label class="radio-inline"> <input type="radio"
+													th:id="|id_${tipoPessoa}|" name="tipoPessoa"
+													class="js-tipo-pessoa form-check-input"
+													th:field="*{tipoPessoa}" th:value="${tipoPessoa}"
+													th:attr="data-documento=${tipoPessoa.documento}, data-mascara=${tipoPessoa.mascara}, data-razao=${tipoPessoa.razao}"
+													th:text="${tipoPessoa.descricao}" />
+												</label>
+
+											</th:block>
+
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-3">
+											<label for="InputClienteSituacao">Situação</label> <select
+												class="form-control" th:field="*{situacao}">
+												<option th:value="ATIVO" th:text="Ativo">Ativo</option>
+												<option th:value="INATIVO" th:text="Inativo">Inativo</option>
+											</select>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-6 bw-required"
+											th:classappend="${#fields.hasErrors('nome')} ? has-error">
+											<label for="nomeFantasia" class="control-label">Nome
+												Fantasia</label> <input type="text"
+												class="form-control js-nome-fantasia" id="nome" name="nome"
+												th:field="*{nome}" />
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-4"
+											th:classappend="${#fields.hasErrors('razaoSocial')} ? has-error">
+											<label for="rgOuRazasocial">Razão Social*</label> <input
+												type="text" class="form-control js-razao-social"
+												id="razaoSocial" name="razaosocial"
+												th:field="*{razaoSocial}" />
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-4">
+											<label for="inscEstadual">Inscrição Estadual</label>
+
+											<div class="input-group">
+												<span class="input-group-addon"> Isento <input
+													type="checkbox" class="js-checkbox-isento" value="ISENTO"
+													style="vertical-align: middle" />
+												</span> <input type="text"
+													class="form-control js-input-inscEstadual"
+													th:field="*{insc_estadual}" />
+											</div>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-4 bw-required"
+											th:classappend="${#fields.hasErrors('cpfOuCnpj')} ? has-error">
+											<label for="cpfOuCnpj" class="control-label">CNPJ</label>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-gg"></i>
+												</div>
+												<input type="text" id="cpfOuCnpj"
+													class="form-control js-mask-cnpj" disabled="disabled"
+													th:field="*{cpfOuCnpj}" />
+											</div>
+											<!-- /.input group -->
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-4"
+											th:classappend="${#fields.hasErrors('email')} ? has-error">
+											<label for="exampleInputPassword1">Email</label>
+											<div class="box-body" style="padding: 0px;">
+												<div class="input-group">
+													<span class="input-group-addon">@</span> <input type="text"
+														class="form-control" placeholder="Email" name="email"
+														th:field="*{email}">
+												</div>
+											</div>
+										</div>
+
+
+										<!-- phone mask -->
+										<div class="form-group col-xs-6 col-sm-4"
+											th:classappend="${#fields.hasErrors('telefone')} ? has-error">
+											<label>Telefone Comercial</label>
+
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-phone"></i>
+												</div>
+												<input type="text" id="telefone" class="form-control"
+													th:field="*{telefone}" />
+											</div>
+											<!-- /.input group -->
+										</div>
+										<!-- /.form group -->
+
+										<!-- phone mask -->
+										<div class="form-group col-xs-6 col-sm-4">
+											<label>Celular</label>
+
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa  fa-mobile"></i>
+												</div>
+												<input type="text" class="form-control"
+													th:field="*{celular}">
+											</div>
+											<!-- /.input group -->
+										</div>
+										<!-- /.form group -->
+
+
+										<!-- textarea -->
+										<div class="form-group col-md-12">
+											<label>Observações</label>
+											<textarea class="form-control" rows="6"
+												placeholder="Enter ..." th:field="*{observacoes}"></textarea>
+										</div>
+
+									</div>
+									<!-- /.box-body -->
+									<!--</form>-->
+								</div>
+								<!-- /.post -->
+							</div>
+							<!-- /.tab-pane activity ******************************************************************************-->
+
+
+
+							<!-- Panel de endereço ------------------------------------------------------------------------->
+
+							<div class="tab-pane" id="settings">
+
+								<div class="post">
+
+									<!-- <form role="form" th:method="POST" th:object="${cliente}">-->
+
+									<div class="box-body">
+
+										<div class="form-group col-xs-6 col-sm-2"
+											style="border: 0px solid #000">
+											<label for="InputClienteSituacao">Logradouro*</label> <select
+												class="form-control" th:field="*{endereco.logradouro}">
+												<option th:value="Avenida">Avenida</option>
+												<option th:value="Rua">Rua</option>
+												<option th:value="Viela">Viela</option>
+												<option th:value="Alameda">Alameda</option>
+												<option th:value="Condominio">Condomínio</option>
+												<option th:value="Esplanada">Esplanada</option>
+											</select>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-6"
+											style="border: 0px solid #000"
+											th:classappend="${#fields.hasErrors('endereco.descricao')} ? has-error">
+											<label for="exampleInputPassword1">Descrição, Número</label>
+
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-map"></i>
+												</div>
+												<input type="text" class="form-control"
+													id="enderecoDescricao" name="enderecoDescricao"
+													th:field="*{endereco.descricao}">
+											</div>
+
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-4"
+											th:classappend="${#fields.hasErrors('endereco.bairro')} ? has-error">
+											<label for="exampleInputPassword1">Bairro*</label>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-random"></i>
+												</div>
+												<input type="text" class="form-control" id="enderecoBairro"
+													name="bairro" th:field="*{endereco.bairro}">
+											</div>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-4">
+											<label for="exampleInputPassword1">Complemento*</label>
+
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-plus"></i>
+												</div>
+
+												<input type="text" class="form-control"
+													id="enderecoComplemento" name="complemento"
+													th:field="*{endereco.complemento}">
+											</div>
+										</div>
+
+										<div class="form-group  col-sm-2">
+											<label for="estado">Estado</label> <select id="estado"
+												class="form-control" th:field="*{endereco.estado}">
+												<option value="">Selecione o estado</option>
+												<option th:each="estado : ${estados}"
+													th:value="${estado.codigo}" th:text="${estado.nome}">São
+													Paulo</option>
+											</select>
+										</div>
+
+										<div class="form-group  col-sm-4">
+											<label for="cidade">Cidade</label>
+											<div class="bw-field-action">
+						
+												<input type="hidden" id="inputHiddenCidadeSelecionada"
+													th:value="*{endereco.cidade} != null ? *{endereco.cidade.codigo}" />
+						
+												<select id="cidade" class="form-control" data:url="@{/cidades}" th:field="*{endereco.cidade}"> </select>
+						
+												<!--<div class="bw-field-action__icon  js-img-loading"
+													style="display: none">
+													<img th:src="@{/images/mini-loading.gif}" />
+												</div>-->
+											</div>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-2">
+											<label for="exampleInputPassword1">CEP*</label>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-list-ul"></i>
+												</div>
+
+												<input type="text" class="form-control" id="enderecoCep"
+													name="cep" th:field="*{endereco.cep}" />
+
+											</div>
+										</div>
+
+									</div>
+									<!-- /.box-body -->
+
+								</div>
+								<!-- /.post -->
+
+							</div>
+							<!-- /.tab-settings -->
+
+							<div class="box-body">
+
+								<div class="box-footer col-xs-6 col-sm-4">
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</div>
+
+							</div>
+
+						</div>
+
+
+					</form>
+
+				</div>
+				<!-- /.nav-tabs-custom -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+
+	</section>
+
+	<th:block layout:fragment="javascript-extra">
+
+		<script th:src="@{/layout/plugins/input-mask/jquery.inputmask.js}"></script>
+		<script
+			th:src="@{/layout/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+		<script
+			th:src="@{/layout/plugins/input-mask/jquery.inputmask.extensions.js}"></script>
+
+		<script
+			th:src="@{/layout/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+		<script
+			th:src="@{/layout/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+		<script th:src="@{/js/datas.js}"></script>
+		<script th:src="@{/js/cliente-mascara-cnpj-cpf.js}"></script>
+		<script th:src="@{/js/cliente.combo-estado-cidade.js}"></script>
+		<!--<script th:src="@{/js/vendors/jquery.mask.min.js}"></script>-->
+
+
+	</th:block>
+
+
+</body>
+
+</html>

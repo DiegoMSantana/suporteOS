@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="'layout/layoutPadrao'">
+
+<head>
+
+<title>Cadastro de Cliente</title>
+
+<!-- daterange picker -->
+<link rel="stylesheet"
+	th:href="@{/layout/bower_components/bootstrap-daterangepicker/daterangepicker.css}">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet"
+	th:href="@{/layout/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}">
+
+<link rel="stylesheet" th:href="@{/stylesheets/vendors/upload.min.css}">
+
+
+
+</head>
+
+
+
+<body>
+
+	<!-- Main content -->
+
+	<section class="content" layout:fragment="conteudo">
+
+		<div class="row">
+			<!-- /.col -->
+			<div class="col-md-12">
+			
+			<div class="alert alert-danger alert-dismissible" th:if="${#fields.hasErrors('${produto.*}')}">
+    			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+    		<h4>
+    			<i class="icon fa fa-exclamation-circle"></i>Alerta!
+    		</h4>
+	    		<th:block th:each="detailedError : ${#fields.detailedErrors('${produto.*}')}" >
+	    			<div>[[${detailedError.message}]].</div>
+	    		</th:block>
+    		</div>
+    		
+    		<!-- Alerta de sucesso -->
+    			<div class="alert alert-success alert-dismissible" th:if="${not #strings.isEmpty(mensagem)}">
+    				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+    					<h4>
+    						Sucesso
+    					</h4>
+		    			<span th:text="${mensagem}"></span>
+    		   </div>
+
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#activity" data-toggle="tab">Dados
+								Gerais</a></li>
+						<!--<li><a href="#timeline" data-toggle="tab">Contatos</a></li>-->
+						<li><a href="#settings" data-toggle="tab">Fornecedor</a></li>
+						<li><a href="#photo" data-toggle="tab">Foto</a></li>
+					</ul>
+
+
+
+					<form th:method="POST" th:object="${produto}"
+						th:action="@{/cadastros/produto/salvar}">
+
+						<div class="tab-content">
+
+							<div class="active tab-pane" id="activity">
+								<!-- Post -->
+								<div class="post">
+
+									<div class="box-body" >
+									
+										<div class="adjustments col-xs-12 col-sm-12">
+
+										<div class="form-group col-xs-3 col-sm-3 bw-required" th:classappend="${#fields.hasErrors('nomeProduto')} ? has-error">
+											<label for="nomeProduto" class="control-label">Nome
+												do Produto</label>&nbsp;<i class="fa fa-info-circle" title="Informe uma descrição para o produto"></i><input
+												type="text" class="form-control" id="nomeProduto"
+												name="descricao" th:field="*{nomeProduto}" required="required" oninvalid="this.setCustomValidity('Digite um nome para o produto')" 
+												onchange="try{setCustomValidity('')}catch(e){}"
+												/>
+										</div>
+
+										<div class="form-group col-xs-3 col-sm-3 bw-required" th:classappend="${#fields.hasErrors('codigoInterno')} ? has-error">
+											<label for="codigoInterno" class="control-label">Código
+												Interno</label>&nbsp;<i class="fa fa-info-circle" title="Código de controle interno do produto"></i>
+											<div class="input-group" style="margin-bottom: 0px;">
+												<input type="text"
+													class="form-control js-codigo-interno-input" id="codigoInterno"
+													th:field="*{codigoInterno}" required="required" pattern="^([A-Z]){5}([0-9]){9}" title="O formato deve ser 5 letras e 9 números em sequência" /><span
+													class="input-group-btn">
+													<button type="button"
+														class="btn btn-default js-codigo-interno-btn">
+														<i class="fa fa-refresh"></i>&nbsp;&nbsp;Gerar
+													</button>
+												</span>
+											</div>
+										</div>
+
+										<div class="form-group col-xs-3 col-sm-3 bw-required">
+											<label for="codigoBarras" class="control-label">Código
+												de Barras</label>&nbsp;<i class="fa fa-info-circle"></i><input
+												type="text" class="form-control js-codigo-barras" id="codigoBarras"
+												name="codigoBarras" />
+										</div>
+
+										<div class="form-group col-xs-3 col-sm-3" th:classappend="${#fields.hasErrors('grupoProduto')} ? has-error" >
+											<label for="InputClienteSituacao">Grupo do Produto</label> 
+											
+											<select class="form-control" th:field="*{grupoProduto}" required="required" oninvalid="this.setCustomValidity('Selecione um grupo para o produto.')" 
+												onchange="try{setCustomValidity('')}catch(e){}">
+												
+												<option selected="selected" value="">Escolha uma grupo</option>
+												<option th:value="Alimenticio" th:text="Alimentício">Sim</option>
+												<option th:value="Limpeza" th:text="Limpeza">Não</option>
+												<option th:value="Informatica" th:text="Informática">Sim</option>
+												
+												<option th:value="Medicamento" th:text="Medicamento">Não</option>
+											</select>
+										</div>
+
+									
+									</div><!--adjustments -->
+									
+									<div class="adjustments col-xs-12 col-sm-12">
+									
+
+										<div class="form-group col-xs-3 col-sm-3 bw-required" th:classappend="${#fields.hasErrors('precoUnitario')} ? has-error">
+											<label for="precoUnitario" class="control-label">Valor 
+												Unitário</label>&nbsp;<i class="fa fa-info-circle" title="O valor deve ser maior que R$ 0,10"></i>
+												<div class="input-group">
+													<div class="input-group-addon">R$</div>
+														<input type="text" class="form-control js-decimal" id="precoUnitario" name="precoUnitario" th:field="*{precoUnitario}" />
+												</div>	
+										</div>
+
+										<div class="form-group col-xs-3 col-sm-3">
+											<label for="InputClienteSituacao">Habilitar Nota
+												Fiscal?</label> <select class="form-control">
+												<option th:value="ATIVO" th:text="Sim">Sim</option>
+												<option th:value="INATIVO" th:text="Não">Não</option>
+											</select>
+										</div>
+
+										<div class="form-group col-xs-3 col-sm-3">
+											<label for="InputClienteSituacao">Possui variações?</label> <select
+												class="form-control">
+												<option th:value="ATIVO" th:text="Sim">Sim</option>
+												<option th:value="INATIVO" th:text="Não">Não</option>
+											</select>
+										</div>
+
+										<div class="form-group col-xs-3 col-sm-3">
+											<label for="InputClienteSituacao">Possui Composição?</label>
+											<select class="form-control">
+												<option th:value="ATIVO" th:text="Sim">Sim</option>
+												<option th:value="INATIVO" th:text="Não">Não</option>
+											</select>
+										</div>
+										
+									</div><!--adjustments -->
+									
+									
+									<div class="adjustments col-xs-12 col-sm-12">
+									
+										<!-- textarea -->
+										<div class="form-group col-xs-12 col-sm-12">
+											<label>Descreva detalhes sobre o produto</label>
+											<textarea class="form-control" rows="6"
+												placeholder="Digite aqui ..." th:field="*{detalhes}"></textarea>
+										</div>
+										
+									</div><!--adjustments -->
+
+										<!--<div class="box-footer col-xs-6 col-sm-4">
+											<button type="submit" class="btn btn-primary">Submit</button>
+										</div>-->
+
+									</div>
+									<!-- /.box-body -->
+									<!--</form>-->
+								</div>
+								<!-- /.post -->
+							</div>
+							<!-- /.tab-pane ******************************************************************************-->
+
+							<!-- Panel de fornecedor ------------------------------------------------------------------------->
+
+							<div class="tab-pane" id="settings">
+
+								<div class="post">
+
+									<!-- <form role="form" th:method="POST" th:object="${cliente}">-->
+
+									<div class="box-body">
+									
+										<div class="adjustments col-xs-12 col-sm-12">
+
+										<div class="form-group col-xs-6 col-sm-2"
+											style="border: 0px solid #000">
+											<label for="InputClienteSituacao">Logradouro*</label> <select
+												class="form-control">
+												<option th:value="Avenida">Avenida</option>
+												<option th:value="Rua">Rua</option>
+												<option th:value="Viela">Viela</option>
+												<option th:value="Alameda">Alameda</option>
+												<option th:value="Condominio">Condomínio</option>
+												<option th:value="Esplanada">Esplanada</option>
+											</select>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-6"
+											style="border: 0px solid #000">
+											<label for="exampleInputPassword1">Descrição, Número</label>
+											<input type="text" class="form-control"
+												id="enderecoDescricao" name="descricao">
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-4">
+											<label for="exampleInputPassword1">Bairro*</label> <input
+												type="text" class="form-control" id="enderecoBairro"
+												name="bairro">
+										</div>
+										
+										</div><!--  -->
+										
+										<div class="adjustments col-xs-12 col-sm-12">
+
+										<div class="form-group col-xs-6 col-sm-4">
+											<label for="exampleInputPassword1">Complemento*</label> <input
+												type="text" class="form-control" id="enderecoComplemento"
+												name="complemento">
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-2"
+											style="border: 0px solid #000">
+											<label for="InputClienteSituacao">Estado*</label> <select
+												class="form-control">
+												<option>MG</option>
+												<option>MT</option>
+												<option>SP</option>
+												<option>PR</option>
+												<option>SC</option>
+												<option>CE</option>
+											</select>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-3"
+											style="border: 0px solid #000">
+											<label for="InputClienteSituacao">Cidade*</label> <select
+												class="form-control">
+												<option>MG</option>
+												<option>MT</option>
+												<option>SP</option>
+												<option>PR</option>
+												<option>SC</option>
+												<option>CE</option>
+											</select>
+										</div>
+
+										<div class="form-group col-xs-6 col-sm-3">
+											<label for="exampleInputPassword1">CEP*</label> <input
+												type="text" class="form-control" id="enderecoCep" name="cep">
+										</div>
+										
+									</div><!--  -->
+
+										<!--<div class="box-footer col-xs-6 col-sm-4">
+											<button type="submit" class="btn btn-primary">Submit</button>
+										</div>-->
+
+									</div>
+									<!-- /.box-body -->
+									<!--</form>-->
+								</div>
+								<!-- /.post -->
+							</div>
+							<!-- /.tab-pane -->
+
+							<!-- Panel de endereco ------------------------------------------------------------------------->
+
+							<!-- Panel de contatos ------------------------------------------------------------------------->
+
+							<div class="tab-pane" id="photo">
+
+								<div class="post">
+
+									<div class="box-body">
+
+										<div class="row">
+										
+										<div class="adjustments col-xs-12 col-sm-12">
+										
+											<div class="form-group col-xs-12  col-sm-12">
+												
+												<input type="hidden" th:field="*{foto}"> <input type="hidden" th:field="*{contentType}">
+												<label class="control-label">Foto</label>
+
+												<div class="js-container-foto-produto" th:attr="data-url-fotos=@{/fotos}">
+													
+													<div id="upload-drop" class="bw-upload">
+														<i class="glyphicon  glyphicon-cloud-upload"></i> <span>Arraste
+															a foto aqui ou </span> <a class="bw-upload-form-file">selecione
+															
+															<input id="upload-select" type="file" accept=".jpg,.jpeg,.png" />
+														
+														</a>
+													</div>
+												</div>
+											</div>
+											</div>
+											
+										</div><!-- row -->
+
+
+									</div>
+
+								</div>
+
+							</div>
+							<!-- /.tab-pane-->
+
+						<!-- Panel de contatos ------------------------------------------------------------------------->
+
+
+							<!--<div class="box-footer col-xs-12 col-sm-12" style="border: none; border-radius: none;">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>-->
+
+							<div class="post">
+								<div class="box-body">
+									<div class="adjustments col-xs-12 col-sm-12">
+										<div class="form-group col-xs-3 col-sm-3">
+									 		<button type="submit" class="btn btn-primary">Submit</button>
+									 	</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- /.tab-content -->
+
+					</form>
+					
+						<th:block th:replace="hbs/FotoProduto"></th:block>
+
+				</div>
+				<!-- /.nav-tabs-custom -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+
+	</section>
+
+
+
+	<th:block layout:fragment="javascript-extra">
+
+		<!--<script src="https://code.jquery.com/jquery-migrate-3.1.0.js"></script>-->
+		
+		<script th:src="@{/js/vendors/uikit.min.js}"></script>
+		<script th:src="@{/js/vendors/upload.min.js}"></script>
+		<script th:src="@{/js/vendors/handlebars.min.js}"></script>
+		<script th:src="@{/js/produto-upload-foto.js}"></script>
+
+
+	</th:block>
+
+
+</body>
+
+</html>

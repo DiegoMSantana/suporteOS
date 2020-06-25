@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="'layout/layoutPadrao'">
+
+<head>
+
+<!-- Google Font -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+
+<link rel="stylesheet"
+	th:href="@{/stylesheets/vendors/easy-autocomplete.themes.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/stylesheets/vendors/easy-autocomplete.min.css}" />
+
+
+</head>
+
+<body>
+
+	<!-- Main content -->
+	<section class="content" layout:fragment="conteudo">
+
+
+		<div class="row">
+
+			<div class="col-md-12">
+
+				<div class="box">
+
+					<div class="box-header with-border">
+						<h3 class="box-title">
+							<i class="fa fa-group"></i> Dados Gerais
+						</h3>
+
+						<!--<div class="box-tools pull-right">
+		            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+		                    title="Collapse">
+		              <i class="fa fa-minus"></i></button>
+		            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+		              <i class="fa fa-times"></i></button>
+		          </div>-->
+
+					</div>
+
+					<form th:method="POST" th:object="${ordemServico}"
+						th:action="@{/ordem/salvar}">
+						
+						<input type="hidden" id="uuid" th:field="*{uuid}">
+
+						<div class="box-body">
+
+							<!-- Cliente -->
+							<div class="form-group col-sm-5 bw-required">
+								<label for="inputCliente" class="control-label">Cliente</label>
+								<input type="text" class="form-control js-nome-cliente-input"
+									title="Selecione um cliente" id="inputCliente"
+									placeholder="Selecione um cliente" th:field="*{cliente.nome}"
+									data:url="@{/ordem}">
+									<input id="codigoCliente" type="hidden" th:field="*{cliente}" />
+							</div>
+
+							<!-- Responsável -->
+							<div class="form-group col-sm-4 bw-required">
+								<label for="inputResponsavel" class="control-label">Responsável</label>
+								<input type="text" class="form-control"
+									th:value="${#authentication.principal.usuario.nome}"
+									disabled="disabled" data:url="@{/cervejas}">
+							</div>
+
+
+							<!-- Status -->
+							<div class="form-group col-sm-3 bw-required">
+								<label class="control-label">Status</label> <select
+									class="form-control select2" style="width: 100%;"
+									th:field="*{situacao}">
+									<th:block th:each="statusOrdem : ${status}">
+										<option th:value="${statusOrdem}"
+											th:text="${statusOrdem.status}">Ativo</option>
+
+									</th:block>
+								</select>
+
+							</div>
+
+							<!--Second line-->
+							<div class="form-group col-sm-4 bw-required">
+								<label class="control-label">Data OS </label>
+
+								<div class="input-group date">
+									<div class="input-group-addon">
+										<i class="fa fa-calendar"></i>
+									</div>
+									<input id="dataCriacao" name="dataCriacao" type="text" class="form-control"
+										th:value="${data}" disabled="disabled">
+								</div>
+								<!-- /.input group -->
+							</div>
+
+							<div class="form-group col-sm-4 bw-required">
+								<label class="control-label">Previsão de Entrega </label>
+
+								<div class="input-group date"> 
+									<div class="input-group-addon">
+										<i class="fa fa-calendar"></i>
+									</div>
+									<input type="text" class="form-control datemask2"
+										id="datepicker" name="previsaoEntrega" th:field="*{previsaoEntrega}">
+								</div>
+								<!-- /.input group -->
+							</div>
+
+							<div class="form-group col-sm-4">
+								<label>Canal de Venda*</label> <select
+									class="form-control select2" style="width: 100%;"
+									th:field="*{canalVenda}">
+									<option value="Presencial" selected="selected">Presencial</option>
+									<option value="Remoto">Remoto</option>
+
+								</select>
+							</div>
+
+						</div>
+						<!-- /.box-body -->
+
+						<div class="box-header with-border">
+							<h3 class="box-title">
+								<i class="fa fa-trophy"></i> Equipamentos
+							</h3>
+						</div>
+
+						<div class="box-body" style="background-color: #f1eeed">
+
+							<div class="form-group col-sm-4 bw-required">
+								<label for="inputEquipamento" class="control-label">Equipamento</label>
+								<input type="text" class="form-control" id="inputEquipamento"
+									placeholder="Digite o nome do equipamento"
+									th:field="*{equipamento.descricao}">
+							</div>
+
+							<div class="form-group col-sm-3 bw-required">
+								<label for="inputMarca" class="control-label">Marca</label> <input
+									type="text" class="form-control" id="inputMarca"
+									placeholder="Digite a marca" th:field="*{equipamento.marca}">
+							</div>
+
+							<div class="form-group col-sm-3 bw-required">
+								<label for="inputModelo" class="control-label">Modelo</label> <input
+									type="text" class="form-control" id="inputModelo"
+									placeholder="Digite o modelo" th:field="*{equipamento.modelo}">
+							</div>
+
+							<div class="form-group col-sm-2">
+								<label for="inputSerie">Série</label> <input type="text"
+									class="form-control" id="inputSerie"
+									placeholder="Digite o número de série"
+									th:field="*{equipamento.serie}">
+							</div>
+
+							<div class="form-group col-sm-6">
+								<label>Condições</label>
+								<textarea class="form-control" rows="5"
+									placeholder="Descreva as condições do equipamento"
+									th:field="*{equipamento.condicoes}"></textarea>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<label>Defeitos</label>
+								<textarea class="form-control" rows="5"
+									placeholder="Descreva os defeitos informados"
+									th:field="*{equipamento.defeitos}"></textarea>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<label>Acessórios</label>
+								<textarea class="form-control" rows="5"
+									placeholder="Descreva os acessórios do equipamento"
+									th:field="*{equipamento.acessorios}"></textarea>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<label>Solução</label>
+								<textarea class="form-control" rows="5"
+									placeholder="Descreva a solução aplicada"
+									th:field="*{equipamento.solucao}"></textarea>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<label>Laudo Técnico</label>
+								<textarea class="form-control" rows="5" placeholder="Enter ..."
+									th:field="*{equipamento.laudoTecnico}"></textarea>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<label>Termos de Garantia</label>
+								<textarea class="form-control" rows="5" placeholder="Enter ..."
+									th:field="*{equipamento.termoGarantia}"></textarea>
+							</div>
+
+						</div>
+						<!-- /.box-body -->
+						
+						
+
+						<div class="panel panel-default">
+
+							<div class="panel-heading">Serviços / Mão de Obra</div>
+
+							<div class="panel-body js-valor-total-itens-servico"
+								style="margin-bottom: 10px !important"
+								data:valor-total-servico="${valorTotalItensServico}">
+
+								<th:block th:replace="cadastros/ordem/TabelaItensServico" />
+
+								<div class="box-body">
+									<div class="form-inline">
+										<button type="button" class="btn btn-primary"
+											data-toggle="modal" data-target="#modal-default">
+											<i class="fa fa-plus-circle"></i> Adicionar Serviço
+										</button>
+										<!--<span style="float: right;"><label>Valor Total dos Serviços : </label> R$ <span class="js-valor-itens-servico">0,00</span></span>-->
+									</div>
+								</div>
+
+								<div class="clearfix"></div>
+
+							</div>
+
+						</div>
+						<!--Panel-Default-->
+
+						<div class="panel panel-default">
+						
+						
+
+							<div class="panel-heading">Produtos/Peças</div>
+
+							<div class="panel-body js-valor-total-itens-produto"
+								data:valor-total-produto="${valorTotalItensProduto}">
+
+								<th:block th:replace="cadastros/ordem/TabelaItensProduto" />
+
+							</div>
+
+							<div class="box-body" style="background-color: #fff">
+
+								<div class="margin">
+									<div class="btn-group">
+										<button type="button" class="btn btn-block btn-primary"
+											data-toggle="modal" data-target="#modal-produto">
+											<i class="fa fa-plus-circle"></i> Adicionar Produto
+										</button>
+									</div>
+								</div>
+
+							</div>
+							<!-- box-body -->
+
+							<div class="clearfix"></div>
+
+							<!--<button type="button" class="btn btn-primary btn-sm" style="margin-bottom:15px; margin-left: 15px; background-color: #000; border-color: #000" >Adicionar Produto</button>-->
+
+						</div>
+						<!--Panel-Default-->
+
+						<div class="panel panel-default">
+
+							<div class="panel-heading">Total</div>
+							<div class="panel-body">
+
+								<!-- <table class="table table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">Mão de Obra</th>
+											<th scope="col">Peças</th>
+											<th scope="col">Frete</th>
+											<th scope="col">Outros</th>
+											<th scope="col">Desconto</th>
+											<th scope="col">Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="text" class="form-control"
+												id="exampleInputEmail1" value="120,00"></td>
+											<td><input type="text" class="form-control"
+												id="exampleInputEmail2" value="120,00"></td>
+											<td><input type="text" class="form-control"
+												id="exampleInputEmail3" value="120,00"></td>
+											<td><input type="text" class="form-control"
+												id="exampleInputEmail4" value="120,00"></td>
+											<td><input type="text" class="form-control"
+												id="exampleInputEmail5" value="120,00"></td>
+											<td>R$ <span class="js-valor-total-box"
+												th:text="${{ordemServico.valorTotalOrdem}}">0,00</span></td>
+
+										</tr>
+									</tbody>
+								</table>-->
+								<div class="row">
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-aqua">
+											<div class="inner">
+												<h3>
+													R$ <span class="js-valor-total-box"
+														th:text="${{ordemServico.valorTotalOrdem}}">
+												</h3>
+
+												<p>Valor Total</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-bag"></i>
+											</div>
+											<a href="#" class="small-box-footer">More info <i
+												class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+									<!-- ./col -->
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-green">
+											<div class="inner">
+												<h3>
+													53<sup style="font-size: 20px">%</sup>
+												</h3>
+
+												<p>Bounce Rate</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-stats-bars"></i>
+											</div>
+											<a href="#" class="small-box-footer">More info <i
+												class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+									<!-- ./col -->
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-yellow">
+											<div class="inner">
+												<h3>44</h3>
+
+												<p>User Registrations</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-person-add"></i>
+											</div>
+											<a href="#" class="small-box-footer">More info <i
+												class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+									<!-- ./col -->
+									<div class="col-lg-3 col-xs-6">
+										<!-- small box -->
+										<div class="small-box bg-red">
+											<div class="inner">
+												<h3>65</h3>
+
+												<p>Unique Visitors</p>
+											</div>
+											<div class="icon">
+												<i class="ion ion-pie-graph"></i>
+											</div>
+											<a href="#" class="small-box-footer">More info <i
+												class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+									<!-- ./col -->
+								</div>
+
+								<div class="clearfix"></div>
+							</div>
+
+						</div>
+						<!--Panel-Default-->
+
+
+						<div class="box-body" style="background-color: #fff">
+			
+								 <div class="form-group col-sm-12">
+				                  <label>Observações</label>
+				                  <textarea class="form-control" rows="4" placeholder="Enter ..." th:field="*{observacoes}"></textarea>
+				                </div>
+				         		
+			         		</div>
+
+
+						
+							
+							<!--<span class="input-group-btn">
+				                	<button type="submit" class="btn btn-primary">Submit</button>
+				              	</span>-->
+				            
+						<div class="box-body" style="background-color: #fff">
+							<div class="margin">
+								<div class="btn-group">
+									<button type="submit" class="btn btn-info">Submit</button>
+									<button type="submit" class="btn btn-info dropdown-toggle"
+										data-toggle="dropdown">
+										<span class="caret"></span> <span class="sr-only">Toggle
+											Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+
+										<li><a href="#">Salvar</a></li>
+										<li><a href="#">Salvar e enviar por email</a></li>
+										<li><a href="#">Deletar</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+
+					</form>
+					<!--Fim do formulário-->
+
+				</div>
+				<!-- box -->
+
+			</div>
+			<!-- col -->
+
+		</div>
+		<!-- row -->
+		
+		<th:block th:replace="cadastros/ordem/ModalServico" />
+		<th:block th:replace="cadastros/ordem/ModalProduto" />
+		<th:block th:replace="hbs/TemplateAutocompleteProduto" />
+
+	</section>
+	<!-- /.content -->
+
+
+	<th:block layout:fragment="javascript-extra">
+
+		<script th:src="@{/layout/plugins/input-mask/jquery.inputmask.js}"></script>
+		<script
+			th:src="@{/layout/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+		<script
+			th:src="@{/layout/plugins/input-mask/jquery.inputmask.extensions.js}"></script>
+		<script
+			th:src="@{/layout/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+		<script
+			th:src="@{/layout/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+		<script th:src="@{/js/vendors/handlebars.min.js}"></script>
+		<script th:src="@{/js/vendors/jquery.easy-autocomplete.min.js}"></script>
+		<script th:src="@{/js/ordem.autocomplete.js}"></script>
+
+		<!--Jquery validation-->
+		<!--<script th:src="@{/js/vendors/jquery-validation/jquery.validate.min.js}"></script>
+		<script th:src="@{/js/vendors/jquery-validation/additional-methods.min.js}"></script>-->
+
+		<script th:src="@{/js/datas.js}"></script>
+		<script th:src="@{/js/produtos.autocomplete.js}"></script>
+		<script th:src="@{/js/tabela-itens-servico-session.js}"></script>
+		<script th:src="@{/js/tabela-itens-produto-session.js}"></script>
+		<script th:src="@{/js/ordem-servico.js}"></script>
+
+		<!--<script th:src="@{/js/lista-clientes-datatable.js}"></script>-->
+		<!--<script th:src="@{/js/vendors/jquery.mask.min.js}"></script>-->
+
+
+	</th:block>
+
+
+
+</body>
+</html>
