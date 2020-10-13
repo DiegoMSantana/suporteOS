@@ -88,7 +88,7 @@
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		
 		<!-- JUnit -->
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 
 
 
