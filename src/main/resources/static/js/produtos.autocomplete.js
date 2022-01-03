@@ -4,7 +4,7 @@ Suporte.AutoCompleteProduto = (function() {
 	
 	function AutoCompleteProduto() {
 		
-		this.nomeProduto = $('.js-produto-nome-input');
+		this.nomeProduto = $('#produto');
 		this.tabelaConfig = $('#produtoConfiguracoes');
 		this.btnFecharModal = $('.js-btn-fechar');
 		

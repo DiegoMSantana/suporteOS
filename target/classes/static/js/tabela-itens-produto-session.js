@@ -22,7 +22,7 @@ Suporte.TabelaItensProduto = (function() {
 		this.emitter = $({});
 		this.on = this.emitter.on.bind(this.emitter);
 		
-		 modificaQuantidade.call(this);
+		modificaQuantidade.call(this);
 		
 	}
 	
@@ -31,7 +31,7 @@ Suporte.TabelaItensProduto = (function() {
 	}
 	
 	function onItemSelecionado(evento, item){
-		
+
 		var resposta = $.ajax({
 			url: 'ordem/produto/item',
 			method: 'POST',

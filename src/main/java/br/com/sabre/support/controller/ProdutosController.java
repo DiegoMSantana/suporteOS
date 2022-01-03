@@ -51,6 +51,8 @@ public class ProdutosController {
 
 	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<ProdutoDTO> pesquisar(String nomeProduto) {
-		return produtos.porNomeProduto(nomeProduto);
+
+		List<ProdutoDTO> produtosRetornados = produtos.porNomeProduto(nomeProduto);
+		return produtosRetornados;
 	}
 }

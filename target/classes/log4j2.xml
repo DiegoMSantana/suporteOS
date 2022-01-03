@@ -8,11 +8,11 @@
 	</Appenders>
 	
 	<Loggers>
-		<Logger name="br.com.sabre.support" level="debug"/>
+		<Logger name="br.com.sabre.support" level="ERROR"/>
 		
-		<Logger name="org.hibernate.SQL" level="debug"/>
+		<Logger name="org.hibernate.SQL" level="ERROR"/>
 	
-		<Root level="erro">
+		<Root level="ERROR">
 			<AppenderRef ref="Console" />
 		</Root>
 	</Loggers>

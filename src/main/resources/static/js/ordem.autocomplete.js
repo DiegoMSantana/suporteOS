@@ -12,8 +12,8 @@ Suporte.Autocomplete = (function() {
 	
 	Autocomplete.prototype.iniciar = function() {
 		var options = {
-			url: function(nomeCliente) {
-				return this.nomeInput.data('url') + '?nomeCliente=' + nomeCliente;
+			url: function(nomeInput) {
+				return this.nomeInput.data('url') + '?nomeCliente=' + nomeInput;
 			}.bind(this),
 			getValue: 'nome',
 			minCharNumber: 3,

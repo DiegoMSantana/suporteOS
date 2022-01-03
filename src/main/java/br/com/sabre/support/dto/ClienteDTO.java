@@ -6,10 +6,9 @@ public class ClienteDTO {
 	private String nome;
 	private String cpfoucnpj;
 
-	public ClienteDTO(Long id, String nome, String cpfoucnpj) {
+	public ClienteDTO(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
-		this.cpfoucnpj = cpfoucnpj;
 	}
 
 	public Long getId() {

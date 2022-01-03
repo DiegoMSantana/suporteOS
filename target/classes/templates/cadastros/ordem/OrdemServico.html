@@ -57,10 +57,12 @@
 							<!-- Cliente -->
 							<div class="form-group col-sm-5 bw-required">
 								<label for="inputCliente" class="control-label">Cliente</label>
+								
 								<input type="text" class="form-control js-nome-cliente-input"
 									title="Selecione um cliente" id="inputCliente"
 									placeholder="Selecione um cliente" th:field="*{cliente.nome}"
-									data:url="@{/ordem}">
+									data:url="@{/ordem}" required="required">
+									
 									<input id="codigoCliente" type="hidden" th:field="*{cliente}" />
 							</div>
 
@@ -235,12 +237,9 @@
 
 						<div class="panel panel-default">
 						
-						
-
 							<div class="panel-heading">Produtos/Peças</div>
 
-							<div class="panel-body js-valor-total-itens-produto"
-								data:valor-total-produto="${valorTotalItensProduto}">
+							<div class="panel-body js-valor-total-itens-produto" data:valor-total-produto="${valorTotalItensProduto}">
 
 								<th:block th:replace="cadastros/ordem/TabelaItensProduto" />
 

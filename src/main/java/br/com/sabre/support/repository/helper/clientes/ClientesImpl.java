@@ -70,7 +70,7 @@ public class ClientesImpl implements ClientesQueries {
 	@Override
 	public List<ClienteDTO> porNome(String nomeCliente) {
 
-		String jpql = "select new br.com.sabre.support.dto.ClienteDTO(id, nome, cpfoucnpj) "
+		String jpql = "select new br.com.sabre.support.dto.ClienteDTO(id, nome) "
 				+ "from Cliente where lower(nome) like lower(:nomeCliente)";
 
 		List<ClienteDTO> clientesFiltrados = manager.createQuery(jpql, ClienteDTO.class)
